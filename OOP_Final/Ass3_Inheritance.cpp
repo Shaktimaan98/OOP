@@ -1,112 +1,97 @@
-#include<iostream>
+#include <iostream>
 using namespace std;
 
-class publication
+class Publication
 {
-    public:
-    char title[100];
-
-    void getdata()
-    {
-        cout<<"Enter the title of book :- ";
-        cin>>(title);
-    }
-
-    void show()
-    {
-        cout<<"Title :- "<<title<<endl;
-    }
+  char title[20];
+  int price;
+  public:
+  void getdata();
+  void display();
 };
-
-class price : public publication
+void Publication::getdata()
 {
+    cout<<"Enter Title: "<<endl;
+    cin>>title;
+    cout<<"Enter price: "<<endl;
+    cin>>price;
+}
+void Publication::display()
+{
+    cout<<"Title: "<<title<<endl;
+    cout<<"Price: "<<price<<endl;
+}
+class Book:public Publication
+{
+    int pagecount;
     public:
-    float price;
-
-    void getprice()
-    {
-        cout<<"Enter the price:- ";
-        cin>>price;
-    }
-    void showprice()
-    {
-        cout<<"Price :- "<<price<<endl;
-    }
+    void getpage();
+    void showpage();
 };
-
-class time : public publication
-{   
-    public:
+void Book::getpage()
+{
+    getdata();
+    cout<<"Enter page count:"<<endl;
+    cin>>pagecount;
+    try
+    {
+        if(pagecount==0)
+        throw pagecount;
+    }
+    catch(int)
+    {
+        cout<<"page is not equal to 0"<<endl;
+        getpage();
+    }
+}
+void Book::showpage()
+{
+    display();
+    cout<<"Page count:"<<pagecount<<endl;
+}
+class Tape:public Publication
+{
     float time;
-
-    void gettime()
-    {
-        cout<<"Enter the play time in minutes :- ";
-        cin>>time;
-        try
-        {
-            if(time<=0)
-            throw time;
-        }
-        catch(float)
-        {
-            cout<<"Invalid Timing Please Enter again"<<endl;
-            gettime();
-        }
-    }
-    int showtime()
-    {
-        cout<<"Timing :- "<<time<<endl;
-    }
-};
-
-class count : public publication
-{
     public:
-    int count;
-
-    void getcount()
-    {
-        cout<<"Enter The Count :- ";
-        cin>>count;
-
-        try
-        {
-            if (count<=0)
-            throw count;
-        }
-        catch(int)
-        {
-            cout<<"Invalid Count Please Enter again"<<endl;
-            getcount();
-        }
-        
-    }
-
-    void showcount()
-    {
-        cout<<"Count :- "<<count<<endl;
-    }
+    void gettime();
+    void showtime();
 };
-
-
-
+void Tape::gettime()
+{
+    getdata();
+    cout<<"Enter Time: "<<endl;
+    cin>>time;
+}
+void Tape::showtime()
+{
+    display();
+    cout<<"Time:"<<time<<endl;
+}
 int main()
 {
-    publication p;
-    price pr;
-    count c;
-    time t;
-
-    p.getdata();
-    pr.getprice();
-    c.getcount();
-    t.gettime();
-    p.show();
-    pr.showprice();
-    c.showcount();
-    t.showtime();
-
-
-    return 0;
+    Publication p;
+    Book b; 
+    Tape t;
+    int ch;
+    do
+    {
+        cout<<"\nMENU \n1.Book \n2.Tape \n3.Exit";
+        cout<<"\nEnter your choice: ";
+        cin>>ch;
+        switch(ch)
+        {
+            case 1:
+            b.getpage();
+            b.showpage();
+            break;
+            case 2:
+            t.gettime();
+            t.showtime();
+            break;
+            case 3:
+            cout<<"End of Program!!";
+            exit(0);
+        }
+    }while(ch!=3);
+        return 0;
 }
